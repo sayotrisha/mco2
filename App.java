@@ -1,38 +1,44 @@
-import java.util.HashMap;
+import java.util.Scanner;
+
 public class App {
- 
- public static void main(String[] args) {
-  String kmer;
-   // Input string
-   String dna = "taccaccaccatag";
-   
-   // Initialize a HashMap
-   HashMap<String, Integer> kmerDist = new HashMap<String, Integer>();
-   
-   // Iterate through the DNA string
-   for (int i = 0; i < dna.length() - 5; i++) {
-     // Compute the hash value of the k-mer
-     kmer = dna.substring(i, i + 6);
-     int hash1 = FNV1A.hash32(kmer);
-     int hash2 = CRC32.crc32(kmer);
-     
-     // Insert the k-mer into the HashMap
-     if (!kmerDist.containsKey(hash1)) {
-       kmerDist.put(kmer, 1);
-     } else {
-       kmerDist.put(kmer, kmerDist.get(hash1) + 1);
-     }
-     
-     if (!kmerDist.containsKey(hash2)) {
-       kmerDist.put(kmer, 1);
-     } else {
-       kmerDist.put(kmer, kmerDist.get(hash2) + 1);
-     }
-   }
-   
-   // Output the k-mer distribution
-   for (String kmerd : kmerDist.keySet()) {
-     System.out.println(kmerd + " : " + kmerDist.get(kmerd));
-   }
- }
+  public static void main(String[] args) throws Exception {
+    Scanner scan = new Scanner(System.in);
+    String DNA;
+    int kmer;
+    int choice = 0;
+
+    System.out.println("DNA string:");
+    DNA = scan.nextLine();
+
+    System.out.println("\nSubstrings of length k:");
+    kmer = scan.nextInt();
+
+    System.out.println("\nChoose the hash function to be used");
+    System.out.println("[1] FNV1A");
+    System.out.println("[2] CRC32");
+    System.out.println("Choice:");
+    choice = scan.nextInt();
+
+    if (choice == 1) {
+      long StartHTTime = System.nanoTime();
+      FNV1A.computeHash32(DNA, kmer);
+      ;
+      long EndHTTime = System.nanoTime();
+      // output func
+      System.out.println("Hash Table (FNV1a)");
+      System.out.println("Time: " + (EndHTTime - StartHTTime) + "ns");
+      System.out.println("");
+    } else if (choice == 2) {
+      long StartHTTime = System.nanoTime();
+      CRC32.computeHash32(DNA, kmer);
+      long EndHTTime = System.nanoTime();
+      System.out.println("Hash Table (CRC32)\n" + "Time: " + (EndHTTime - StartHTTime) + "ns");
+      System.out.println("");
+    } else
+      System.out.println("Invalid input!");
+
+       
+
+    
+  }
 }
