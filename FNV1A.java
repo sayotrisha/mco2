@@ -34,16 +34,6 @@ public final class FNV1A {
         return rv;
     }
 
-    /* public static int hash32(final String k) { */
-    /*     int rv = FNV_32_INIT; */
-    /*     final int len = k.length(); */
-    /*     for(int i = 0; i < len; i++) { */
-    /*         rv ^= k.charAt(i); */
-    /*         rv *= FNV_32_PRIME; */
-    /*     } */
-    /*     return rv; */
-    /* } */
-
     public static long hash64(final String k) {
         long rv = FNV_64_INIT;
         final int len = k.length();
